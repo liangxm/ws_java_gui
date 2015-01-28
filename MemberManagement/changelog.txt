@@ -1,0 +1,4 @@
+2014-03-24    Fixed Bug     Not minus card balance for purchase with card.
+
+build version 1.0.0.2
+======================================
