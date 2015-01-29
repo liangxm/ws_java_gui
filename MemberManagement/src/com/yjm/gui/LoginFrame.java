@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.yjm.model.Employee;
 import com.yjm.service.EmployeeService;
@@ -116,12 +115,8 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 	public static void main(String args[]) {
 		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
+			String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+			UIManager.setLookAndFeel(lookAndFeel);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "未找到新皮肤，请升级JDK到6.0 update 10");
 		}

@@ -42,6 +42,7 @@ public class AboutDialog extends JDialog {
 		sb.append("4.注册会员后，会员将享受不同于散客的一些优惠活动如：打折，生日特惠，积分兑换等等。").append("\n");
 		sb.append("5.稍后改进版将会更加完善，包括增加营业额分析，会员偏好统计，会员级别管理，积分管理，节日特惠等项目。").append("\n");
 		sb.append("6.库存管理主要用来统计保存化妆品和耗材，后续版本可能会加入成本估算。").append("\n");
+		sb.append("                当前版本:1.0.0.2 v20150129").append("\n");
 		text = new Multiline(sb.toString());
 		text.setBounds(110, 30, 500, 520);
 		text.setBackground(new Color(70, 200, 200));

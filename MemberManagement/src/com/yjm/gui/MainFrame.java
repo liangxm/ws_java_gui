@@ -6,12 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 
 import com.yjm.service.EmployeeService;
 import com.yjm.util.DialogFactory;
@@ -29,10 +34,12 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 9191062468995901065L;
 	private JImagePane pane;
+	private JPanel pane1;
 	private JMenuBar mnb;
+	private JToolBar bar;
 	private JMenu mnMemberManage, mnConsume, mnEmployee,mInventory, mnQuery, mnindiv,
 			mnsys;
-	private JMenuItem itemReg, itmeChange, itemChangePass, itemConfiscate;
+	private JMenuItem itemReg, itmeChange, itemChangePass, itemConfiscate, itemExit;
 	private JMenuItem itemNotMember, itmeNote, itemintegral;
 	private JMenuItem itemGetMoney, itemEmReg, itmeEmChange, itemEmChangePass;
 	private JMenuItem itemInventoryAdd,itemInventoryUpdate;
@@ -41,9 +48,12 @@ public class MainFrame extends JFrame {
 	private JMenuItem AwokeBirth, SetSound, KeySet;
 	private JMenuItem ServicesAdd, ServicesManage, addCardType, maintainCardType,
 			LogManage, BackRenew,help;
+	private JButton jbt1,jbt2,jbt3;
 
 	private ImageIcon img;
 	private String cur_user;
+	
+	private double width,height;
 
 	public MainFrame(String cur_user) {
 		this.cur_user = cur_user;
@@ -52,12 +62,13 @@ public class MainFrame extends JFrame {
 		this.setIconImage(ProjectSettings.logo);
 		this.setLayout(new BorderLayout());
 		init();
-		this.getContentPane().add(mnb,BorderLayout.NORTH);
+		//this.getContentPane().add(mnb,BorderLayout.NORTH);
+		this.getContentPane().add(pane1,BorderLayout.NORTH);
 		this.getContentPane().add(pane,BorderLayout.CENTER);
 		this.setTitle("艺剪美会员管理系统v1.0.0.2"); //设置标题处的文字
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//窗体关闭时的操作 退出程序
-		double width = Toolkit.getDefaultToolkit().getScreenSize().width; //得到当前屏幕分辨率的高
-		double height = Toolkit.getDefaultToolkit().getScreenSize().height;//得到当前屏幕分辨率的宽
+		width = Toolkit.getDefaultToolkit().getScreenSize().width; //得到当前屏幕分辨率的高
+		height = Toolkit.getDefaultToolkit().getScreenSize().height;//得到当前屏幕分辨率的宽
 		this.setSize((int)width,(int)height);//设置大小
 		this.setLocation(0,0); //设置窗体居中显示
 		this.setResizable(false);//禁用最大化按钮
@@ -68,16 +79,33 @@ public class MainFrame extends JFrame {
 		img = new ImageIcon(SwingResourceManager.getImage("funcImg/room.jpg"));
 		pane = new JImagePane(img.getImage(),JImagePane.CENTRE);
 		pane.setLayout(null);
-		
+		pane1 = new JPanel();
+		pane1.setLayout(new BorderLayout());
 		// 菜单条
 		mnb = new JMenuBar();
+		//工具栏
+		bar = new JToolBar();
+		
+		jbt1 = new JButton("会员开卡", new ImageIcon(SwingResourceManager.getImage("funcImg/ccard1.jpg")));
+		jbt2 = new JButton("收银台", new ImageIcon(SwingResourceManager.getImage("funcImg/cmoney1.jpg")));
+		jbt3 = new JButton("会员管理", new ImageIcon(SwingResourceManager.getImage("funcImg/member1.jpg")));
+		
+		jbt1.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbt1.setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+		jbt2.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbt2.setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+		jbt3.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbt3.setVerticalTextPosition(SwingConstants.BOTTOM);
 		
 		//会员管理
 		mnMemberManage = new JMenu("会员管理");
-		itemReg = new JMenuItem("会员注册");
+		itemReg = new JMenuItem("会员注册（办卡）");
 		itmeChange = new JMenuItem("会员维护");
 		itemChangePass = new JMenuItem("会员消费查询");
 		itemConfiscate = new JMenuItem("会员卡充值");
+		itemExit = new JMenuItem("退出");
 		
 		//收银管理
 		mnConsume = new JMenu("收银管理");
@@ -119,7 +147,7 @@ public class MainFrame extends JFrame {
 		maintainCardType = new JMenuItem("维护卡类型");
 		LogManage = new JMenuItem("日志管理");
 		BackRenew = new JMenuItem("数据备份/恢复");
-		help = new JMenuItem("使用说明");
+		help = new JMenuItem("版权说明");
 		MenuItemActionListener mta = new MenuItemActionListener();
 		
 		mnb.setBounds(0, 3, 800, 22);
@@ -128,6 +156,7 @@ public class MainFrame extends JFrame {
 		itmeChange.addActionListener(mta);
 		itemChangePass.addActionListener(mta);
 		itemConfiscate.addActionListener(mta);
+		itemExit.addActionListener(mta);
 		
 		itemGetMoney.addActionListener(mta);
 		itemNotMember.addActionListener(mta);
@@ -158,12 +187,27 @@ public class MainFrame extends JFrame {
 		LogManage.addActionListener(mta);
 		BackRenew.addActionListener(mta);
 		help.addActionListener(mta);
+		
+		jbt1.addActionListener(mta);
+		jbt2.addActionListener(mta);
+		jbt3.addActionListener(mta);
 
+		//工具栏
+		bar.setBorder(new EtchedBorder());
+		bar.add(jbt1);
+		bar.add(jbt2);
+		bar.add(jbt3);
+		
+		pane1.add(mnb,BorderLayout.NORTH);
+		pane1.add(bar,BorderLayout.CENTER);
+		
 		// 添加到菜单
 		mnMemberManage.add(itemReg);
 		mnMemberManage.add(itmeChange);
 		mnMemberManage.add(itemChangePass);
 		mnMemberManage.add(itemConfiscate);
+		mnMemberManage.addSeparator();
+		mnMemberManage.add(itemExit);
 
 		mnConsume.add(itemGetMoney);
 		mnConsume.add(itemNotMember);
@@ -213,19 +257,23 @@ public class MainFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//会员注册
-			if(e.getSource().equals(itemReg)){
+			if(e.getSource().equals(itemReg)||e.getSource().equals(jbt1)){
 				createDialog(1).setVisible(true);
 			}
 			//会员维护
-			else if(e.getSource().equals(itmeChange)){
+			else if(e.getSource().equals(itmeChange)||e.getSource().equals(jbt3)){
 				createDialog(2).setVisible(true);
 			}
 			//会员消费查询
 			else if(e.getSource().equals(itemChangePass)){
 				createDialog(9).setVisible(true);
 			}
+			//退出
+			else if(e.getSource().equals(itemExit)){
+				System.exit(0);
+			}
 			//会员收银
-			else if(e.getSource().equals(itemGetMoney)){
+			else if(e.getSource().equals(itemGetMoney)||e.getSource().equals(jbt2)){
 				createDialog(10).setVisible(true);
 			}
 			//散客收银

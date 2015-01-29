@@ -97,9 +97,16 @@ public class ServiceAddDialog extends AbstractDialog {
 		btnsersbumit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				servicesService.addService(new Services(txtsername.getText(),Integer.parseInt(txtsermoney.getText()),jrb1.isSelected()?"常规项目":"附加项目"));			
-				JOptionPane.showMessageDialog(null, "新服务添加成功");
-				dispose();
+				String sername =  txtsername.getText();
+				String sermoney = txtsermoney.getText();
+				if(sername.trim().length()!=0||sermoney.trim().length()!=0){
+					servicesService.addService(new Services(txtsername.getText(),Integer.parseInt(txtsermoney.getText()),jrb1.isSelected()?"常规项目":"附加项目"));			
+					JOptionPane.showMessageDialog(null, "新服务添加成功");
+					dispose();
+				}else{
+					JOptionPane.showMessageDialog(null, "请填写完整信息后再提交！", "提示",
+							JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		
